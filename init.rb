@@ -43,8 +43,6 @@ DESCRIPTION
 
 		macro :filelink do |obj, args, text|
 			args, options = extract_macro_options(args, :separate)
-			logger.info args
-			logger.info options
 
 			separate=false
 			if(options[:separate] == 'true')
@@ -62,7 +60,6 @@ DESCRIPTION
 			linktarget = URI.encode(linktarget)
 			linktextEncoded = linktext.gsub('\\','/')
 
-			logger.info "File link #{text}:#{linktext}: #{linktarget}"
 			out = "".html_safe
 
 			re = /(^.*[\\])(.*\.[^\\]+)$/m
@@ -90,8 +87,7 @@ DESCRIPTION
 				out << link = link_to(foldername, foldertarget, :target =>'_blank', :class => 'filelink', :title => id, :name => id, :id => id)
 			else
 				out << content_tag(:i, '', :class=>cssName, :title => l('copy'), :onClick=>"const ta=document.createElement('textarea');ta.value='"+linktextEncoded+"'.replace(/\\//g, '\\\\');document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);")
-				out << link = link_to(linktext, linktarget, :title => l('copy'), :target =>'_blank', :class => 'filelink', :title => id, :name => id, :id => id)
-				#out << cpbutton.html_safe
+				out << link = link_to(linktext, linktarget, :target =>'_blank', :class => 'filelink', :title => id, :name => id, :id => id)
 			end
 			out
 		end
